@@ -1,0 +1,14 @@
+<div class="container mt-4">
+    <div class="card p-4 shadow">
+        <h3 class="mb-3">Détail de l'événement</h3>
+
+        <a routerLink="/events/index"  class="btn btn-primary mb-3">Retour à la liste des événements</a>
+       
+        <div class="mb-2"><strong>ID :</strong> {{ event.id }}</div>
+        <div class="mb-2"><strong>Titre :</strong> {{ event.titre }}</div>
+        <div class="mb-2"><strong>Description :</strong> {{ event.description }}</div>
+        <div class="mb-2"><strong>Date :</strong> {{ event.date }}</div>
+        <div class="mb-2"><strong>Lieu :</strong> {{ event.lieu }}</div>
+        <div class="mb-2"><strong>Catégorie :</strong> {{ event.categorie }}</div>
+    </div>
+</div>

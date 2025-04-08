@@ -1,0 +1,35 @@
+<div class="container">
+    <h3>Modification d'un événement</h3>
+    <a routerLink="/events" class="btn btn-primary">Retour à la liste des événements</a>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-group mt-3">
+            <input formControlName="titre" placeholder="Titre de l'événement" id="titre" class="form-control" [(ngModel)]="event.titre" type="text">
+            <div *ngIf="f['titre'].touched && f['titre'].errors?.['required']" class="text text-danger">Le titre est obligatoire</div>
+        </div>
+
+        <div class="form-group mt-3">
+            <textarea formControlName="description" placeholder="Description de l'événement" id="description" class="form-control" [(ngModel)]="event.description" type="text"></textarea>
+            <div *ngIf="f['description'].touched && f['description'].errors?.['required']" class="text text-danger">La description est obligatoire</div>
+        </div>
+
+        <div class="form-group mt-3">
+            <input formControlName="date" placeholder="Date de l'événement" id="date" class="form-control" [(ngModel)]="event.date" type="date">
+            <div *ngIf="f['date'].touched && f['date'].errors?.['required']" class="text text-danger">La date est obligatoire</div>
+        </div>
+
+        <div class="form-group mt-3">
+            <input formControlName="lieu" placeholder="Lieu de l'événement" id="lieu" class="form-control" [(ngModel)]="event.lieu" type="text">
+            <div *ngIf="f['lieu'].touched && f['lieu'].errors?.['required']" class="text text-danger">Le lieu est obligatoire</div>
+        </div>
+
+        <div class="form-group mt-3">
+            <input formControlName="categorie" placeholder="Catégorie de l'événement" id="categorie" class="form-control" [(ngModel)]="event.categorie" type="text">
+            <div *ngIf="f['categorie'].touched && f['categorie'].errors?.['required']" class="text text-danger">La catégorie est obligatoire</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3" [disabled]="!form.valid">
+            Modifier l'événement
+        </button>
+    </form>
+</div>

@@ -1,0 +1,74 @@
+<div class="container">
+
+    <h3>Formulaire d'inscription</h3>
+  
+  
+    <!-- Formulaire -->
+    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+      
+      <!-- Champ Nom -->
+      <div class="form-group mt-3">
+        <input 
+            formControlName="name" 
+            placeholder="Votre nom complet" 
+            id="name" 
+            class="form-control" 
+            type="text">
+        <div *ngIf="f['name'].touched" class="text text-danger"> Le nom est obligatoire </div>
+      
+      </div>
+  
+      <!-- Champ Email -->
+      <div class="form-group mt-3">
+        <input 
+            formControlName="email" 
+            placeholder="Votre email" 
+            id="email" 
+            class="form-control" 
+            type="email"
+            >
+        <div *ngIf="f['email'].touched" class="text text-danger"> 
+            L'email est obligatoire
+        </div>
+
+      </div>
+  
+      <!-- Champ Password -->
+      <div class="form-group mt-3">
+        <input 
+            formControlName="password" 
+            placeholder="Votre mot de passe" 
+            id="password" 
+            class="form-control" 
+            type="password"
+          >
+        <div *ngIf="f['password'].touched" class="text text-danger"> 
+            Le mot de passe est obligatoire
+        </div>
+      </div>
+
+      <!-- Champ Password -->
+      <div class="form-group mt-3">
+        <input 
+            formControlName="password_confirmation" 
+            placeholder="Votre mot de passe" 
+            id="password_confirmation" 
+            class="form-control" 
+            type="password"
+          >
+        <div *ngIf="f['password_confirmation'].touched" class="text text-danger"> 
+            Le mot de passe est obligatoire
+        </div>
+      </div>
+  
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="!registerForm.valid">
+        S'inscrire
+      </button>
+
+      <!-- Lien vers login -->
+      <div class="mt-3">
+        <p>Vous avez déjà un compte ? <a routerLink="/login" class="text-primary">Connectez-vous ici</a></p>
+      </div>
+    </form>
+</div>

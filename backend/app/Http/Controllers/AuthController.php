@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -62,6 +63,17 @@ public function __construct()
         ]);
     }
 
+    public function getUserRole()
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return response()->json(['role' => $user->role]); // Assurez-vous que votre modèle User a un attribut 'role'
+    }
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
@@ -70,4 +82,5 @@ public function __construct()
             'message' => 'Logged out successfully'
         ]);
     }
+    
 }

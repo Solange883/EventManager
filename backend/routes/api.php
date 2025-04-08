@@ -20,6 +20,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/events', [EventController::class, 'store']); // Middleware personnalisé si besoin
     Route::put('/events/{id}', [EventController::class, 'update']);
     Route::delete('/events/{id}', [EventController::class, 'destroy']);
+    Route::get('/events/{id}', [EventController::class, 'show']);
     Route::post('/events/{id}/register', [RegistrationController::class, 'register']);
-  
+    
+    Route::get('/user/role', [AuthController::class, 'getUserRole']);
+    Route::get('/events/{id}/registrations/pdf', [RegistrationController::class, 'generateRegistrationsPdf']);
 });

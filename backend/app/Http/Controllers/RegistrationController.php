@@ -7,6 +7,8 @@ use App\Models\Registration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
+
 class RegistrationController extends Controller
 {
     public function __construct()
@@ -31,6 +33,8 @@ class RegistrationController extends Controller
 
         return response()->json($registration, 201);
     }
+
+   
 
    
 }
