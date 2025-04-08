@@ -32,17 +32,5 @@ class RegistrationController extends Controller
         return response()->json($registration, 201);
     }
 
-    public function unregister($id)
-    {
-        $event = Event::findOrFail($id);
-        $registration = $event->registrations()->where('user_id', Auth::id())->first();
-
-        if (!$registration) {
-            return response()->json(['message' => 'Not registered for this event'], 400);
-        }
-
-        $registration->delete();
-
-        return response()->json(null, 204);
-    }
+   
 }
