@@ -13,9 +13,16 @@ import { EventService } from '@app/event/event.service';
 export class DashboardComponent implements OnInit {
 
   isAdmin: boolean = false;
+  isLoggedIn: boolean = false;
+
   constructor(private router: Router,private eventService: EventService) {}
 
-  ngOnInit(): void {this.checkUserRole();}
+  ngOnInit(): void {
+    this.checkUserRole();
+    // Vérifie si un token est présent dans le localStorage 
+    this.isLoggedIn = !!localStorage.getItem('token');
+  
+  }
 
   checkUserRole(): void {
     this.eventService.getUserRole().subscribe(
@@ -39,10 +46,10 @@ export class DashboardComponent implements OnInit {
 
   logout(): void {
     localStorage.removeItem('token');
-    // OU
+    
     sessionStorage.removeItem('token');
  
-    
+    this.isLoggedIn = false;
     // Rediriger vers la page de login
     this.router.navigate(['/login']);
   }

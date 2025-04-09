@@ -38,6 +38,7 @@ export class  AuthService {
     catchError(this.errorHandler));
   }
 
+
   errorHandler(error: any){
     let errorMessage = "";
     if (error.error instanceof ErrorEvent) {

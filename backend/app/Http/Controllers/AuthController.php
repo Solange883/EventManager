@@ -74,13 +74,5 @@ public function __construct()
         return response()->json(['role' => $user->role]); // Assurez-vous que votre modèle User a un attribut 'role'
     }
 
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->json([
-            'message' => 'Logged out successfully'
-        ]);
-    }
     
 }

@@ -1,35 +1,70 @@
-<div class="container">
-    <h3>Modification d'un événement</h3>
-    <a routerLink="/events" class="btn btn-primary">Retour à la liste des événements</a>
+<div class="container mt-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">✏️ Modifier un événement</h4>
+        <a routerLink="/events" class="btn btn-outline-dark btn-sm">
+          <i class="bi bi-arrow-left"></i> Retour à la liste
+        </a>
+      </div>
+  
+      <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          
+        
+          <div class="mb-3">
+            <label for="titre" class="form-label fw-semibold">Titre</label>
+            <input formControlName="titre" type="text" class="form-control" id="titre"
+              placeholder="Titre de l'événement" [(ngModel)]="event.titre">
+            <div *ngIf="f['titre'].touched && f['titre'].errors?.['required']" class="text-danger small">
+              Le titre est obligatoire
+            </div>
+          </div>
+  
+        
+          <div class="mb-3">
+            <label for="description" class="form-label fw-semibold">Description</label>
+            <textarea formControlName="description" class="form-control" id="description" rows="3"
+              placeholder="Description de l'événement" [(ngModel)]="event.description"></textarea>
+            <div *ngIf="f['description'].touched && f['description'].errors?.['required']" class="text-danger small">
+              La description est obligatoire
+            </div>
+          </div>
+  
+         
+          <div class="mb-3">
+            <label for="date" class="form-label fw-semibold">Date</label>
+            <input formControlName="date" type="date" class="form-control" id="date" [(ngModel)]="event.date">
+            <div *ngIf="f['date'].touched && f['date'].errors?.['required']" class="text-danger small">
+              La date est obligatoire
+            </div>
+          </div>
+  
+          
+          <div class="mb-3">
+            <label for="lieu" class="form-label fw-semibold">Lieu</label>
+            <input formControlName="lieu" type="text" class="form-control" id="lieu"
+              placeholder="Lieu de l'événement" [(ngModel)]="event.lieu">
+            <div *ngIf="f['lieu'].touched && f['lieu'].errors?.['required']" class="text-danger small">
+              Le lieu est obligatoire
+            </div>
+          </div>
+  
+          
+          <div class="mb-4">
+            <label for="categorie" class="form-label fw-semibold">Catégorie</label>
+            <input formControlName="categorie" type="text" class="form-control" id="categorie"
+              placeholder="Catégorie de l'événement" [(ngModel)]="event.categorie">
+            <div *ngIf="f['categorie'].touched && f['categorie'].errors?.['required']" class="text-danger small">
+              La catégorie est obligatoire
+            </div>
+          </div>
+  
 
-    <form [formGroup]="form" (ngSubmit)="submit()">
-        <div class="form-group mt-3">
-            <input formControlName="titre" placeholder="Titre de l'événement" id="titre" class="form-control" [(ngModel)]="event.titre" type="text">
-            <div *ngIf="f['titre'].touched && f['titre'].errors?.['required']" class="text text-danger">Le titre est obligatoire</div>
-        </div>
-
-        <div class="form-group mt-3">
-            <textarea formControlName="description" placeholder="Description de l'événement" id="description" class="form-control" [(ngModel)]="event.description" type="text"></textarea>
-            <div *ngIf="f['description'].touched && f['description'].errors?.['required']" class="text text-danger">La description est obligatoire</div>
-        </div>
-
-        <div class="form-group mt-3">
-            <input formControlName="date" placeholder="Date de l'événement" id="date" class="form-control" [(ngModel)]="event.date" type="date">
-            <div *ngIf="f['date'].touched && f['date'].errors?.['required']" class="text text-danger">La date est obligatoire</div>
-        </div>
-
-        <div class="form-group mt-3">
-            <input formControlName="lieu" placeholder="Lieu de l'événement" id="lieu" class="form-control" [(ngModel)]="event.lieu" type="text">
-            <div *ngIf="f['lieu'].touched && f['lieu'].errors?.['required']" class="text text-danger">Le lieu est obligatoire</div>
-        </div>
-
-        <div class="form-group mt-3">
-            <input formControlName="categorie" placeholder="Catégorie de l'événement" id="categorie" class="form-control" [(ngModel)]="event.categorie" type="text">
-            <div *ngIf="f['categorie'].touched && f['categorie'].errors?.['required']" class="text text-danger">La catégorie est obligatoire</div>
-        </div>
-
-        <button type="submit" class="btn btn-primary mt-3" [disabled]="!form.valid">
-            Modifier l'événement
-        </button>
-    </form>
-</div>
+          <button type="submit" class="btn btn-success w-100" [disabled]="!form.valid">
+            <i class="bi bi-check-circle-fill"></i> Enregistrer les modifications
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

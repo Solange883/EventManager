@@ -48,13 +48,12 @@ export class EditComponent implements OnInit {
     return this.form.controls;
   }
 
-  // Méthode de soumission du formulaire
+
   submit() {
     console.log(this.form.value);
-    // Mise à jour du post avec les nouvelles valeurs
+    
     this.eventService.update(this.id, this.form.value).subscribe((res: any) => {
-      console.log('Evenement modifié avec succès !');
-      // Redirection vers la liste des posts après modification
+      alert('Evenement modifié avec succès !');
       this.router.navigateByUrl('events/index'); //on utilise pas routerLink a cause de la logique supplementaire
     });
   }

@@ -37,7 +37,7 @@ export class CreateComponent  implements OnInit {
     console.log('Submit button clicked');
     console.log(this.form.value);
     this.eventService.create(this.form.value).subscribe((res:any) => {
-      console.log('Evenement enregistré avec succès !');
+      alert('Evenement enregistré avec succès !');
       this.router.navigateByUrl('events/index');
     })
   }

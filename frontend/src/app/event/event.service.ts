@@ -68,7 +68,7 @@ delete(id: number) {
   );
 }
 
-//  New method to handle event registration
+
 createRegistration(id: number): Observable<any> {
   return this.httpClient.post(
     `${this.apiUrl}/events/${id}/register`,
