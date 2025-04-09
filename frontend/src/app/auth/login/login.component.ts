@@ -39,6 +39,7 @@ export class LoginComponent  implements OnInit{
        this.router.navigateByUrl('/dashboard');}
       else {
         console.error('Token non trouvé dans la réponse de l\'API.');
+      
       }
     }, (error) => {
       console.error('Erreur lors de la connexion:', error);

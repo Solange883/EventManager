@@ -5,4 +5,5 @@ export interface Event {
     date: string,
     lieu: string,
     categorie: string,
+    image: string,
 }

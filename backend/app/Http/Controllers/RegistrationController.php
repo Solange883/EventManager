@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 
 
+
+
+
+
 class RegistrationController extends Controller
 {
     public function __construct()
@@ -30,6 +34,8 @@ class RegistrationController extends Controller
             'event_id' => $event->id,
             'registration_date' => now(),
         ]);
+
+       
 
         return response()->json($registration, 201);
     }

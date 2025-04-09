@@ -4,6 +4,7 @@ import { CommonModule, NgIf } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { EventService } from '../event.service';
 
+
 @Component({
   selector: 'app-create',
   imports: [CommonModule,
@@ -15,6 +16,9 @@ import { EventService } from '../event.service';
 export class CreateComponent  implements OnInit {
 
   form!: FormGroup
+ 
+
+
   constructor(private eventService: EventService,private router: Router){}
   
   ngOnInit(): void {
@@ -23,7 +27,8 @@ export class CreateComponent  implements OnInit {
       description: new FormControl('', [Validators.required]),
       date: new FormControl('', [Validators.required]),
       lieu: new FormControl('', [Validators.required]),
-      categorie: new FormControl('', [Validators.required])
+      categorie: new FormControl('', [Validators.required]),
+      image: new FormControl('', [Validators.required]),
       });
 
      
@@ -33,14 +38,53 @@ export class CreateComponent  implements OnInit {
     return this.form.controls;
   }
 
-  submit(){
-    console.log('Submit button clicked');
-    console.log(this.form.value);
-    this.eventService.create(this.form.value).subscribe((res:any) => {
-      alert('Evenement enregistré avec succès !');
-      this.router.navigateByUrl('events/index');
-    })
+
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.form.patchValue({
+        image: file
+      });
+    }
   }
 
+  previewUrl: string | ArrayBuffer | null = null;
+  selectedFile: File | null = null;
+
+  onFileSelected(e: Event): void {
+    const input = e.target as HTMLInputElement;
+  
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+  
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+  
+
+  submit() {
+    const formData = new FormData();
+    formData.append('titre', this.form.get('titre')?.value);
+    formData.append('description', this.form.get('description')?.value);
+    formData.append('date', this.form.get('date')?.value);
+    formData.append('lieu', this.form.get('lieu')?.value);
+    formData.append('categorie', this.form.get('categorie')?.value);
+    if (this.selectedFile) {
+      formData.append('image', this.selectedFile, this.selectedFile.name);
+    }
+  
+    this.eventService.create(formData).subscribe((res: any) => {
+      alert('Événement enregistré avec succès !');
+      this.router.navigateByUrl('events/index');
+    });
+  }
+  
+
+
+ 
 }
 

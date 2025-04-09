@@ -1,59 +1,94 @@
 <div class="container mt-5">
+    <!-- Header avec filtres alignés et bouton dashboard -->
+    <header class="bg-light p-4 rounded shadow-sm mb-4 d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <select [(ngModel)]="filterDate" (ngModelChange)="applyFilter()" class="form-select form-select-sm" style="width: 180px;">
+                <option value="">📅 Date</option>
+                <option value="2025-04-18">18 avril 2025</option>
+                <option value="2025-05-01">1 mai 2025</option>
+                <option value="2025-06-15">15 juin 2025</option>
+                <option value="2025-07-20">20 juillet 2025</option>
+            </select>
 
-    <div class="d-flex justify-content-end mb-3">
-      <a routerLink="/dashboard" class="btn btn-outline-primary">
-        <i class="bi bi-speedometer2 me-1"></i> Dashboard
-      </a>
-    </div>
-  
+            <select [(ngModel)]="filterLieu" (ngModelChange)="applyFilter()" class="form-select form-select-sm" style="width: 150px;">
+                <option value="">📍 Lieu</option>
+                <option value="Dakar">Dakar</option>
+                <option value="Touba">Touba</option>
+                <option value="Saint-Louis">Saint-Louis</option>
+                <option value="Thies">Thies</option>
+                <option value="Kaolack">Kaolack</option>
+            </select>
+
+            <select [(ngModel)]="filterCategorie" (ngModelChange)="applyFilter()" class="form-select form-select-sm" style="width: 160px;">
+                <option value="">🎭 Catégorie</option>
+                <option value="Concert">Concert</option>
+                <option value="Conference">Conference</option>
+                <option value="Festival">Festival</option>
+                <option value="Exposition">Exposition</option>
+                <option value="Atelier">Atelier</option>
+                <option value="Séminaire">Séminaire</option>
+                <option value="Webinaire">Webinaire</option>
+                <option value="Cinema">Cinema</option>
+            </select>
+        </div>
+
+        <a routerLink="/dashboard" class="btn btn-primary btn-sm mt-2 mt-md-0">
+            <i class="bi bi-speedometer2 me-1"></i> Dashboard
+        </a>
+    </header>
+
+    <!-- Liste des événements -->
     <div class="card shadow-sm">
-      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-        <h4 class="mb-0">📋 Liste des événements</h4>
-      </div>
-  
-      <div class="table-responsive">
-        <table class="table table-hover table-bordered mb-0">
-          <thead class="table-light text-center">
-            <tr>
-              <th>ID</th>
-              <th>Titre</th>
-              <th>Description</th>
-              <th>Date</th>
-              <th>Lieu</th>
-              <th>Catégorie</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-  
-          <tbody>
-            <tr *ngFor="let event of events">
-              <td class="align-middle text-center">{{ event.id }}</td>
-              <td class="align-middle">{{ event.titre }}</td>
-              <td class="align-middle">{{ event.description }}</td>
-              <td class="align-middle">{{ event.date }}</td>
-              <td class="align-middle">{{ event.lieu }}</td>
-              <td class="align-middle">{{ event.categorie }}</td>
-              <td class="align-middle text-center">
-                <div class="d-flex flex-wrap gap-2 justify-content-center">
-                  <a [routerLink]="['/events/', event.id, 'view']" class="btn btn-sm btn-info">
-                    <i class="bi bi-eye-fill"></i> Détails
-                  </a>
-                  <button *ngIf="isLoggedIn" type="button" (click)="inscrireEvent(event.id)" class="btn btn-sm btn-success">
-                    <i class="bi bi-check2-square"></i> S'inscrire
-                  </button>
-                  <a *ngIf="isLoggedIn" [routerLink]="['/events/', event.id, 'edit']" class="btn btn-sm btn-warning">
-                    <i class="bi bi-pencil"></i> Modifier
-                  </a>
-                  <button *ngIf="isLoggedIn" type="button" (click)="deleteEvent(event.id)" class="btn btn-sm btn-danger">
-                    <i class="bi bi-trash"></i> Supprimer
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-  
-        </table>
-      </div>
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Liste des événements</h4>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered mb-0">
+                <thead class="table-light text-center">
+                    <tr>
+                       
+                        <th>Titre</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Lieu</th>
+                        <th>Catégorie</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let event of events">
+                      
+                        <td class="align-middle">{{ event.titre }}</td>
+                        <td class="align-middle">{{ event.description }}</td>
+                        <td class="align-middle">{{ event.date }}</td>
+                        <td class="align-middle">{{ event.lieu }}</td>
+                        <td class="align-middle">{{ event.categorie }}</td>
+                        <td class="align-middle">
+                            <img [src]="'http://localhost:8000/' + event.image" alt="Event Image" width="100" height="70" *ngIf="event.image">
+                        </td>
+                        <td class="align-middle text-center">
+                            <div class="d-flex flex-nowrap gap-2 justify-content-center">
+                                <a [routerLink]="['/events/', event.id, 'view']" class="btn btn-sm btn-info">
+                                    <i class="bi bi-eye-fill"></i> Détails
+                                </a>
+                                <button *ngIf="isLoggedIn" type="button" (click)="inscrireEvent(event.id)" class="btn btn-sm btn-success">
+                                    <i class="bi bi-check2-square"></i> S'inscrire
+                                </button>
+                                <a *ngIf="isLoggedIn" [routerLink]="['/events/', event.id, 'edit']" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pencil"></i> Modifier
+                                </a>
+                                <button *ngIf="isLoggedIn" type="button" (click)="deleteEvent(event.id)" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i> Supprimer
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
-  
+</div>
+

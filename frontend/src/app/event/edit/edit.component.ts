@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { FormControl, FormGroup,  ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule  } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule, NgIf } from '@angular/common';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { EventService } from '../event.service';
 import { Event } from '../event';
 
 @Component({
   selector: 'app-edit',
-  imports: [CommonModule,
-    ReactiveFormsModule,
-    RouterModule,],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss'
 })
@@ -27,12 +25,21 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
     // Récupération de l'ID du paramètre de la route
     this.id = this.route.snapshot.params['id'];
-    
+  
     // Récupérer les données du post à modifier
     this.eventService.find(this.id).subscribe((data: Event) => {
       this.event = data;
+  
+      // Initialisation du formulaire avec les valeurs existantes
+      this.form.patchValue({
+        titre: this.event.titre,
+        description: this.event.description,
+        date: this.event.date,
+        lieu: this.event.lieu,
+        categorie: this.event.categorie
+      });
     });
-
+  
     // Initialisation du formulaire avec les validations
     this.form = new FormGroup({
       titre: new FormControl('', [Validators.required]),
@@ -42,6 +49,7 @@ export class EditComponent implements OnInit {
       categorie: new FormControl('', [Validators.required])
     });
   }
+  
 
   // Getter pour accéder aux contrôles du formulaire plus facilement
   get f() {

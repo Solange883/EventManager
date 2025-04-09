@@ -22,4 +22,3 @@ Assure-toi d’avoir installé les outils suivants :
 - ng new frontend --style=scss --skip-tests=true
 - ng serve
 
-php artisan make:seeder AdminUserSeeder 

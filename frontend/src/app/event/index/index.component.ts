@@ -4,17 +4,22 @@ import { RouterModule } from '@angular/router';
 import { EventService } from '../event.service';
 import { Event } from '../event';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-index',
-  imports: [NgFor,NgIf, RouterModule,],
+  imports: [NgFor,NgIf, RouterModule,FormsModule],
   templateUrl: './index.component.html',
   styleUrl: './index.component.scss'
 })
 export class IndexComponent  implements OnInit{
   events: Event[] = [];
   isLoggedIn: boolean = false;
+
+  filterDate: string = '';
+  filterLieu: string = '';
+  filterCategorie: string = '';
   
   constructor(private eventService: EventService, private router: Router,) {}
 
@@ -24,6 +29,9 @@ export class IndexComponent  implements OnInit{
     });
     this.isLoggedIn = !!localStorage.getItem('token');
   }
+
+ 
+  
 
   deleteEvent(id: number){
     
@@ -39,6 +47,18 @@ export class IndexComponent  implements OnInit{
     this.eventService.createRegistration(id).subscribe(res => {
       alert("Inscription réussie");
     })
+  }
+
+  // Appliquer les filtres
+  applyFilter(): void {
+    this.eventService.getAll(this.filterDate, this.filterLieu, this.filterCategorie).subscribe(
+      (data: Event[]) => {
+        this.events = data;
+      },
+      (error) => {
+        console.error('Erreur lors du filtrage des événements', error);
+      }
+    );
   }
 
 }

@@ -20,7 +20,8 @@ export class EventService {
     const token = localStorage.getItem('token') || '';
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
+      
+    
     });
   }
   
@@ -33,22 +34,41 @@ private getRequestOptions() {
 
   
   
-  create(event: Event): Observable<any> {
+  create(eventData: FormData): Observable<any> {
     const headers = this.getAuthHeaders();
     console.log('Headers:', headers);
 
-    return this.httpClient.post(this.apiUrl + '/events/', JSON.stringify(event), this.getRequestOptions()).pipe(
-        catchError(this.errorHandler)
-    );
+    return this.httpClient.post(this.apiUrl + '/events/', eventData, {
+      headers: headers // pas de Content-Type ici
+    });
+    
 }
 
 
 
-getAll(): Observable<any> {
-  return this.httpClient.get(this.apiUrl + '/events/', this.getRequestOptions()).pipe(
-      catchError(this.errorHandler)
+getAll(date?: string, lieu?: string, categorie?: string): Observable<any> {
+  let url = this.apiUrl + '/events/';
+  const params: any = {};
+
+  if (date) {
+    params.date = date;
+  }
+  if (lieu) {
+    params.lieu = lieu;
+  }
+  if (categorie) {
+    params.categorie = categorie;
+  }
+
+  if (Object.keys(params).length > 0) {
+    url += '?' + new URLSearchParams(params).toString();
+  }
+
+  return this.httpClient.get(url, this.getRequestOptions()).pipe(
+    catchError(this.errorHandler)
   );
 }
+
 
 find(id: number): Observable<any> {
   return this.httpClient.get(this.apiUrl + "/events/" + id, this.getRequestOptions()).pipe(
@@ -56,11 +76,16 @@ find(id: number): Observable<any> {
   );
 }
 
-update(id: number, auth: Auth): Observable<any> {
-  return this.httpClient.put(this.apiUrl + "/events/" + id, JSON.stringify(auth), this.getRequestOptions()).pipe(
-      catchError(this.errorHandler)
+update(id: number, formData: FormData): Observable<any> {
+  return this.httpClient.put(this.apiUrl + "/events/" + id, formData, this.getRequestOptions()).pipe(
+    catchError(this.errorHandler)
   );
 }
+
+
+
+
+
 
 delete(id: number) {
   return this.httpClient.delete(this.apiUrl + "/events/" + id, this.getRequestOptions()).pipe(
@@ -75,7 +100,8 @@ createRegistration(id: number): Observable<any> {
     {}, 
     this.getRequestOptions()
   ).pipe(
-    catchError(this.errorHandler)
+    catchError(
+      this.errorHandler)
   );
 }
 
