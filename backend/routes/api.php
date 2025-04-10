@@ -26,5 +26,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/events/{id}', [EventController::class, 'show']);
 
     Route::get('/user/role', [AuthController::class, 'getUserRole']);
+    Route::get('/events/{id}/downloadPdf', [RegistrationController::class, 'downloadPdf']);
+
+
    
 });

@@ -105,6 +105,17 @@ createRegistration(id: number): Observable<any> {
   );
 }
 
+downloadRegistrationsPdf(id: number): Observable<Blob> {
+  const headers = this.getAuthHeaders();  // Utilisation des en-têtes avec le token
+  return this.httpClient.get(`${this.apiUrl}/events/${id}/downloadPdf`, {
+    responseType: 'blob',  // Type de réponse attendu
+    headers: headers       // Ajout des en-têtes d'authentification
+  }).pipe(
+    catchError(this.errorHandler)
+  );
+}
+
+
 getUserRole(): Observable<any> {
   return this.httpClient.get(`${this.apiUrl}/user/role`, this.getRequestOptions()).pipe(
       catchError(this.errorHandler)

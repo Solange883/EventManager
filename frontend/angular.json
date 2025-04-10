@@ -54,9 +54,10 @@
               }
             ],
            "styles": [
-"node_modules/bootstrap/dist/css/bootstrap.min.css",
-"src/styles.scss"
-],
+            "@angular/material/prebuilt-themes/azure-blue.css",
+            "node_modules/bootstrap/dist/css/bootstrap.min.css",
+            "src/styles.scss"
+          ],
             "scripts": []
           },
           "configurations": {
@@ -114,6 +115,7 @@
               }
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
             "scripts": []

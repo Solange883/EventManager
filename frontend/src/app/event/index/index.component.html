@@ -2,34 +2,52 @@
     <!-- Header avec filtres alignés et bouton dashboard -->
     <header class="bg-light p-4 rounded shadow-sm mb-4 d-flex justify-content-between align-items-center flex-wrap">
         <div class="d-flex align-items-center gap-2 flex-wrap">
-            <select [(ngModel)]="filterDate" (ngModelChange)="applyFilter()" class="form-select form-select-sm" style="width: 180px;">
-                <option value="">📅 Date</option>
-                <option value="2025-04-18">18 avril 2025</option>
-                <option value="2025-05-01">1 mai 2025</option>
-                <option value="2025-06-15">15 juin 2025</option>
-                <option value="2025-07-20">20 juillet 2025</option>
-            </select>
+            <mat-form-field appearance="fill" style="width: 190px;height:65px;margin-top: 10px;">
+                <mat-label>📅 Date</mat-label>
+                <input matInput [matDatepicker]="picker"
+                       [(ngModel)]="filterDate"
+                       (dateChange)="applyFilter()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+              
+              
 
-            <select [(ngModel)]="filterLieu" (ngModelChange)="applyFilter()" class="form-select form-select-sm" style="width: 150px;">
-                <option value="">📍 Lieu</option>
-                <option value="Dakar">Dakar</option>
-                <option value="Touba">Touba</option>
-                <option value="Saint-Louis">Saint-Louis</option>
-                <option value="Thies">Thies</option>
-                <option value="Kaolack">Kaolack</option>
-            </select>
-
-            <select [(ngModel)]="filterCategorie" (ngModelChange)="applyFilter()" class="form-select form-select-sm" style="width: 160px;">
-                <option value="">🎭 Catégorie</option>
-                <option value="Concert">Concert</option>
-                <option value="Conference">Conference</option>
-                <option value="Festival">Festival</option>
-                <option value="Exposition">Exposition</option>
-                <option value="Atelier">Atelier</option>
-                <option value="Séminaire">Séminaire</option>
-                <option value="Webinaire">Webinaire</option>
-                <option value="Cinema">Cinema</option>
-            </select>
+              <input
+              list="lieux"
+              [(ngModel)]="filterLieu"
+              (ngModelChange)="applyFilter()"
+              placeholder="📍 Lieu"
+              class="form-control form-control-sm"
+              style="width: 150px;"
+            />
+            <datalist id="lieux">
+              <option value="Dakar">
+              <option value="Touba">
+              <option value="Saint-Louis">
+              <option value="Thies">
+              <option value="Kaolack">
+            </datalist>
+            
+            <input
+              list="categories"
+              [(ngModel)]="filterCategorie"
+              (ngModelChange)="applyFilter()"
+              placeholder="🎭 Catégorie"
+              class="form-control form-control-sm"
+              style="width: 160px;"
+            />
+            <datalist id="categories">
+              <option value="Concert">
+              <option value="Conference">
+              <option value="Festival">
+              <option value="Exposition">
+              <option value="Atelier">
+              <option value="Séminaire">
+              <option value="Webinaire">
+              <option value="Cinema">
+            </datalist>
+            
         </div>
 
         <a routerLink="/dashboard" class="btn btn-primary btn-sm mt-2 mt-md-0">
@@ -60,7 +78,6 @@
 
                 <tbody>
                     <tr *ngFor="let event of events">
-                      
                         <td class="align-middle">{{ event.titre }}</td>
                         <td class="align-middle">{{ event.description }}</td>
                         <td class="align-middle">{{ event.date }}</td>
@@ -77,16 +94,20 @@
                                 <button *ngIf="isLoggedIn" type="button" (click)="inscrireEvent(event.id)" class="btn btn-sm btn-success">
                                     <i class="bi bi-check2-square"></i> S'inscrire
                                 </button>
-                                <a *ngIf="isLoggedIn" [routerLink]="['/events/', event.id, 'edit']" class="btn btn-sm btn-warning">
+                                <a *ngIf="isLoggedIn && isAdmin" [routerLink]="['/events/', event.id, 'edit']" class="btn btn-sm btn-warning">
                                     <i class="bi bi-pencil"></i> Modifier
                                 </a>
-                                <button *ngIf="isLoggedIn" type="button" (click)="deleteEvent(event.id)" class="btn btn-sm btn-danger">
+                                <button *ngIf="isLoggedIn && isAdmin" type="button" (click)="deleteEvent(event.id)" class="btn btn-sm btn-danger">
                                     <i class="bi bi-trash"></i> Supprimer
+                                </button>
+                                <button *ngIf="isLoggedIn && isAdmin" type="button" (click)="pdf(event.id)" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-file-earmark-pdf"></i> Générer PDF
                                 </button>
                             </div>
                         </td>
                     </tr>
                 </tbody>
+                
             </table>
         </div>
     </div>
