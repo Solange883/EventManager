@@ -17,7 +17,7 @@ Assure-toi d’avoir installé les outils suivants :
 - Configure ton fichier .env avec les informations de ta base de données 
 - php artisan serve
 - php artisan make:mail EventRegistrationConfirmation
-- composer require barryvdh/laravel-dompdf   
+- composer require barryvdh/laravel-dompdf    bibliothèque  qui fournit un générateur de PDF en PHP, avec Laravel  
 - Pour Sactum
      .composer require laravel/sanctum
      .php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
