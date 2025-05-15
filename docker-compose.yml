@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # Service pour Laravel (backend)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: solange883/backend:latest
+    container_name: laravel-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  # Service pour Angular (frontend)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: solange883/frontend:latest
+    container_name: angular-app
+    ports:
+      - "4200:80" 
+    networks:
+      - app-network
+
+  # Base de données MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: eventmanager
+
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - app-network
+
+volumes:
+  db-data:
+
+networks:
+  app-network:
+    driver: bridge
