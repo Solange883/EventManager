@@ -14,9 +14,11 @@ spec:
       labels:
         app: laravel
     spec:
+      imagePullSecrets:
+       - name: secret
       containers:
         - name: laravel
-          image: solange883/backend:latest 
+          image: solange883/eventmanager:back
           ports:
             - containerPort: 8000
           env:
@@ -39,6 +41,7 @@ spec:
       volumes:
         - name: storage
           emptyDir: {}
+          
 
 ---
 apiVersion: v1
@@ -52,4 +55,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8000
-  type: ClusterIP
+  type: ClusterIPc

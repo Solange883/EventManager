@@ -12,9 +12,11 @@ spec:
       labels:
         app: angular
     spec:
+      imagePullSecrets:
+       - name: secret
       containers:
         - name: angular
-          image: solange883/frontend:latest   
+          image: solange883/eventmanager:front  
           ports:
             - containerPort: 80  
                     
